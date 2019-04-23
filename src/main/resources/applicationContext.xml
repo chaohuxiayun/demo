@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+						   http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                           http://www.springframework.org/schema/context 
+                           http://www.springframework.org/schema/context/spring-context-4.0.xsd
+                           http://www.springframework.org/schema/tx
+    					   http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+    					   http://www.springframework.org/schema/aop            
+           					http://www.springframework.org/schema/aop/spring-aop-4.0.xsd "
+>
+
+    <context:component-scan base-package="xy.service,xy.dao"/>
+
+    <!-- 读取属性文件 -->
+    <bean
+            class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations" value="classpath:jdbc.properties"></property>
+    </bean>
+
+    <!-- 创建数据源 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${db.driver}" />
+        <property name="url" value="${db.url}" />
+        <property name="username" value="${db.username}" />
+        <property name="password" value="${db.password}" />
+        <!-- 最大并发连接数 -->
+        <property name = "maxActive" value = "${druid.maxActive}" />
+        <!-- 初始化连接数量 -->
+        <property name = "initialSize" value = "${druid.initialSize}" />
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name = "maxWait" value = "${druid.maxWait}" />
+        <!-- 最小空闲连接数 -->
+        <property name = "minIdle" value = "${druid.minIdle}" />
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name = "timeBetweenEvictionRunsMillis" value ="${druid.timeBetweenEvictionRunsMillis}" />
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name = "minEvictableIdleTimeMillis" value ="${druid.minEvictableIdleTimeMillis}" />
+        <property name = "validationQuery" value = "${druid.validationQuery}" />
+        <property name = "testWhileIdle" value = "${druid.testWhileIdle}" />
+        <property name = "testOnBorrow" value = "${druid.testOnBorrow}" />
+        <property name = "testOnReturn" value = "${druid.testOnReturn}" />
+        <property name = "maxOpenPreparedStatements" value ="${druid.maxOpenPreparedStatements}" />
+        <!-- 打开 removeAbandoned 功能 -->
+        <property name = "removeAbandoned" value = "${druid.removeAbandoned}" />
+        <!-- 1800 秒，也就是 30 分钟 -->
+        <property name = "removeAbandonedTimeout" value ="${druid.removeAbandonedTimeout}" />
+        <!-- 关闭 abanded 连接时输出错误日志 -->
+        <property name = "logAbandoned" value = "${druid.logAbandoned}" />
+    </bean>
+    <!-- hibernate sessionFactory -->
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>
+        <!--<property name="configLocation" value="classpath:hibernate.cfg.xml">-->
+            <!--</property>-->
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.cache.use_second_level_cache">${hibernate.use_second_level_cache}</prop>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+                <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+                <prop key="hibernate.connection.autocommit">${hibernate.connection.autocommit}</prop>
+                <prop key="hibernate.cache.provider_configuration_file_resource_path">${hibernate.cache.provider_configuration_file_resource_path}</prop>
+                <prop key="hibernate.cache.use_second_level_cache">${hibernate.cache.use_second_level_cache}</prop>
+                <prop key="hibernate.cache.region.factory_class">${hibernate.cache.region.factory_class}</prop>
+            </props>
+
+        </property>
+        <!-- 映射配置文件设置 -->
+        <property name="packagesToScan">
+            <list>
+                <value>xy.entity</value>
+            </list>
+        </property>
+
+    </bean>
+    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <!-- 开启事务控制的注解支持 -->
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="insert*" propagation="REQUIRED"/>
+            <tx:method name="add*" propagation="REQUIRED"/>
+            <tx:method name="update*" propagation="REQUIRED"/>
+            <tx:method name="del*" propagation="REQUIRED"/>
+            <tx:method name="edit*" propagation="REQUIRED"/>
+
+            <tx:method name="get*" read-only="true" propagation="NOT_SUPPORTED"/>
+            <tx:method name="find*" read-only="true" propagation="NOT_SUPPORTED"/>
+            <tx:method name="query*" read-only="true" propagation="NOT_SUPPORTED"/>
+            <tx:method name="select*" read-only="true" propagation="NOT_SUPPORTED"/>
+
+            <!--增删改查以外的方法，有异常 回滚-->
+            <tx:method name="*" rollback-for="Exception"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config proxy-target-class="true">
+        <aop:pointcut id="txNeed" expression="execution(* xy.service..*.*(..))"/>
+        <aop:advisor pointcut-ref="txNeed" advice-ref="txAdvice"/>
+    </aop:config>
+
+
+
+    <!--线程池配置-->
+    <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <!--核心线程数-->
+        <property name="corePoolSize" value="${thread.corePoolSize}"/>
+        <!--最大线程数-->
+        <property name="maxPoolSize" value="${thread.maxPoolSize}"/>
+        <!--队列最大长度-->
+        <property name="queueCapacity" value="${thread.queueCapacity}"/>
+        <!--线程池维护线程所允许的空闲时间，默认60s-->
+        <property name="keepAliveSeconds" value="${thread.keepAliveSeconds}"/>
+        <!-- 线程池对拒绝任务(无线程可用)的处理策略 ThreadPoolExecutor.CallerRunsPolicy策略 ,调用者的线程会执行该任务,如果执行器已关闭,则丢弃.  -->
+        <property name="rejectedExecutionHandler">
+            <bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy"/>
+        </property>
+    </bean>
+
+
+</beans>
