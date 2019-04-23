@@ -17,7 +17,7 @@
     <mvc:annotation-driven/>
     <mvc:default-servlet-handler/>
     <!-- 配置注解扫描,核心文件中只扫描controller -->
-    <context:component-scan base-package="xy.controller"/>
+    <context:component-scan base-package="xy.*.controller"/>
 
     <!-- 注解驱动 -->
 
