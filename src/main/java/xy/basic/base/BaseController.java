@@ -1,4 +1,4 @@
-package xy.base;
+package xy.basic.base;
 
 import org.codehaus.jackson.map.ObjectMapper;
 

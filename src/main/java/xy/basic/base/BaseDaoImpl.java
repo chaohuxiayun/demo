@@ -1,4 +1,4 @@
-package xy.base;
+package xy.basic.base;
 
 import java.util.HashMap;
 import java.util.List;
@@ -9,7 +9,6 @@ import org.hibernate.*;
 import org.hibernate.criterion.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 
 /**
  * @author xiayun

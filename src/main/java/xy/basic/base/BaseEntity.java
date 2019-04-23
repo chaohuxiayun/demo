@@ -1,4 +1,4 @@
-package xy.base;
+package xy.basic.base;
 
 import java.io.Serializable;
 
@@ -61,14 +61,5 @@ public class BaseEntity implements Serializable {
         this.isDelete = isDelete;
     }
 
-    @PreUpdate
-    public void preUpdate(BaseEntity entity){
-        entity.setUpdateTime(System.currentTimeMillis());
-    }
-
-    @PrePersist
-    public void preAdd(BaseEntity entity){
-        entity.setAddTime(System.currentTimeMillis());
-    }
 
 }
