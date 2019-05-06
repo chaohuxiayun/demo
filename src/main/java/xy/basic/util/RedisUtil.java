@@ -8,9 +8,10 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;  
-  
-  
+import org.springframework.util.CollectionUtils;
+import redis.clients.jedis.Jedis;
+
+
 /** 
  *
  * 基于spring和redis的redisTemplate工具类 
@@ -38,7 +39,8 @@ public class RedisUtil {
         try {  
             if(time>0){  
                 redisTemplate.expire(key, time, TimeUnit.SECONDS);  
-            }  
+            }
+
             return true;  
         } catch (Exception e) {  
             e.printStackTrace();  
@@ -101,7 +103,7 @@ public class RedisUtil {
      * @return true成功 false失败 
      */  
     public boolean set(String key,Object value) {  
-         try {  
+         try {
             redisTemplate.opsForValue().set(key, value);  
             return true;  
         } catch (Exception e) {  

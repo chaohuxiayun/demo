@@ -2,6 +2,7 @@ package xy.basic.entity;
 
 import xy.basic.base.BaseEntity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -17,8 +18,9 @@ public class TempleEntity extends BaseEntity {
     private String name;
     private String address;
     private String icon;
-    private String desc;
+    private String cont;
 
+    @Column(name = "name",nullable = false)
     public String getName() {
         return name;
     }
@@ -43,11 +45,12 @@ public class TempleEntity extends BaseEntity {
         this.icon = icon;
     }
 
-    public String getDesc() {
-        return desc;
+    @Column(name = "cont" ,length = 1000)
+    public String getCont() {
+        return cont;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setCont(String cont) {
+        this.cont = cont;
     }
 }

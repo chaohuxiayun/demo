@@ -10,9 +10,9 @@ public class BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 6335056279344205457L;
     private Long id;
-    private Long deleteTime = 0L;
-    private Long addTime = 0L;
-    private Long updateTime = 0L;
+    private Long deleteTime = System.currentTimeMillis();
+    private Long addTime = System.currentTimeMillis();
+    private Long updateTime = System.currentTimeMillis();
 
     /**
      * 这条数据是否已经被删除
@@ -29,6 +29,7 @@ public class BaseEntity implements Serializable {
         this.id = id;
     }
 
+    @Column(name="delete_time")
     public Long getDeleteTime() {
         return deleteTime;
     }
@@ -37,6 +38,7 @@ public class BaseEntity implements Serializable {
         this.deleteTime = deleteTime;
     }
 
+    @Column(name="add_time")
     public Long getAddTime() {
         return addTime;
     }
@@ -45,6 +47,7 @@ public class BaseEntity implements Serializable {
         this.addTime = addTime;
     }
 
+    @Column(name="update_time")
     public Long getUpdateTime() {
         return updateTime;
     }
@@ -53,6 +56,7 @@ public class BaseEntity implements Serializable {
         this.updateTime = updateTime;
     }
 
+    @Column(name="is_delete")
     public String getIsDelete() {
         return isDelete;
     }

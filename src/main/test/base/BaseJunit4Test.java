@@ -2,12 +2,10 @@ package base;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
-import xy.basic.service.TempleService;
 import xy.basic.util.RedisUtil;
 
 import javax.annotation.Resource;
@@ -38,8 +36,9 @@ public class BaseJunit4Test {
 
         System.out.println(123);
         redisUtil.set("xiayun", "123");
+        redisUtil.set("zs", "zhangsan");
         Object value = redisUtil.get("xia");
-        System.out.println(String.valueOf(value));
+        System.out.println(value);
     }
 
 }

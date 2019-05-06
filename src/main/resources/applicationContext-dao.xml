@@ -80,7 +80,7 @@
         <!-- 映射配置文件设置 -->
         <property name="packagesToScan">
             <list>
-                <value>xy.basic.entity</value>
+                <value>xy.*.entity</value>
             </list>
         </property>
 

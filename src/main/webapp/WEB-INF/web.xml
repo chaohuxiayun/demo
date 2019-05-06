@@ -27,7 +27,9 @@
   <!-- spring context -->
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>classpath:applicationContext-dao.xml,classpath:applicationContext-redis.xml</param-value>
+    <param-value>classpath:applicationContext-dao.xml,
+      classpath:applicationContext-redis.xml
+    </param-value>
   </context-param>
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
