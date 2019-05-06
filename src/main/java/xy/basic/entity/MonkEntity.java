@@ -12,23 +12,21 @@ import java.util.Date;
  * @Created by xiayun
  */
 @Entity
-@Table(name="Monk")
+@Table(name = "Monk")
 public class MonkEntity extends BaseEntity {
 
     private String name;
 
-    @Column(name="gender",length = 2)
     private String gender;
 
-    @Column(name="birth_day")
     private Date birthDay;
 
-    @Column(name="home_address")
     private String homeAddress;
 
     private String education;
 
-    private TempleEntity templeEntity;
+    private TempleEntity temple;
+
 
     public String getName() {
         return name;
@@ -38,6 +36,7 @@ public class MonkEntity extends BaseEntity {
         this.name = name;
     }
 
+    @Column(name = "gender", length = 2)
     public String getGender() {
         return gender;
     }
@@ -46,6 +45,7 @@ public class MonkEntity extends BaseEntity {
         this.gender = gender;
     }
 
+    @Column(name = "birth_day")
     public Date getBirthDay() {
         return birthDay;
     }
@@ -54,6 +54,7 @@ public class MonkEntity extends BaseEntity {
         this.birthDay = birthDay;
     }
 
+    @Column(name = "home_address")
     public String getHomeAddress() {
         return homeAddress;
     }
@@ -71,12 +72,12 @@ public class MonkEntity extends BaseEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "templeEntity")
-    public TempleEntity getTempleEntity() {
-        return templeEntity;
+    @JoinColumn(name = "temple")
+    public TempleEntity getTemple() {
+        return temple;
     }
 
-    public void setTempleEntity(TempleEntity templeEntity) {
-        this.templeEntity = templeEntity;
+    public void setTemple(TempleEntity temple) {
+        this.temple = temple;
     }
 }

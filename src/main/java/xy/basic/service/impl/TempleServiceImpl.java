@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import xy.basic.base.BaseServiceImpl;
 import xy.basic.dao.TempleDao;
 import xy.basic.entity.TempleEntity;
+import xy.basic.service.TempleService;
 
 /**
  * @Description
@@ -12,7 +13,7 @@ import xy.basic.entity.TempleEntity;
  * @Created by xiayun
  */
 @Service
-public class TempleServiceImpl extends BaseServiceImpl<TempleEntity> {
+public class TempleServiceImpl extends BaseServiceImpl<TempleEntity> implements TempleService {
 
     @Autowired
     public TempleServiceImpl(TempleDao templeDao){

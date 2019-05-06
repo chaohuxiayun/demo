@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import xy.basic.base.BaseServiceImpl;
 import xy.basic.dao.MonkDao;
 import xy.basic.entity.MonkEntity;
+import xy.basic.service.MonkService;
 
 /**
  * @Description
@@ -12,7 +13,7 @@ import xy.basic.entity.MonkEntity;
  * @Created by xiayun
  */
 @Service
-public class MonkServiceImpl extends BaseServiceImpl<MonkEntity> {
+public class MonkServiceImpl extends BaseServiceImpl<MonkEntity> implements MonkService {
 
     @Autowired
     public MonkServiceImpl(MonkDao monkDao){

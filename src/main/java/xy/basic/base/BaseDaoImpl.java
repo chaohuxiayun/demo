@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class BaseDaoImpl<T extends BaseEntity> implements BaseDao<T> {
 
-    public Class targetClass;
+    protected Class targetClass;
 
     protected Session session;
 
@@ -28,8 +28,6 @@ public class BaseDaoImpl<T extends BaseEntity> implements BaseDao<T> {
      * 是否使用二级缓存--目前好像没有作用
      */
     protected boolean isSetCache = false;
-
-    //private ProjectionList resultList;
 
 
     protected void setSession() {
@@ -141,10 +139,6 @@ public class BaseDaoImpl<T extends BaseEntity> implements BaseDao<T> {
     public Page selectWithPage(Map<String, Object> map, Page page) {
 
         Criteria c = qbcSelect(map);
-        //DetachedCriteria dc = DetachedCriteria.forClass(targetClass,targetClass.getSimpleName());
-
-
-        //ProjectionList
         c.setCacheable(isSetCache);
         c.setFirstResult(0);
         c.setMaxResults(1);

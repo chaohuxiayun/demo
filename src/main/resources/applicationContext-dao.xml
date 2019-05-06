@@ -14,14 +14,17 @@
            					http://www.springframework.org/schema/aop/spring-aop-4.0.xsd "
 >
 
-    <context:component-scan base-package="xy.*.service,xy.*.dao"/>
+    <context:component-scan base-package="xy.basic.*">
+        <context:exclude-filter type="annotation"  expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
 
     <!-- 读取属性文件 -->
-    <bean
+    <!--<bean
             class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations" value="classpath:jdbc.properties"></property>
-    </bean>
-
+    </bean>-->
+    <context:property-placeholder location="classpath:jdbc.properties"
+                                  ignore-unresolvable="true" />
     <!-- 创建数据源 -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
         <property name="driverClassName" value="${db.driver}" />
@@ -77,7 +80,7 @@
         <!-- 映射配置文件设置 -->
         <property name="packagesToScan">
             <list>
-                <value>xy.entity</value>
+                <value>xy.basic.entity</value>
             </list>
         </property>
 
@@ -106,7 +109,7 @@
     </tx:advice>
 
     <aop:config proxy-target-class="true">
-        <aop:pointcut id="txNeed" expression="execution(* xy.service..*.*(..))"/>
+        <aop:pointcut id="txNeed" expression="execution(* xy.basic.service..*.*(..))"/>
         <aop:advisor pointcut-ref="txNeed" advice-ref="txAdvice"/>
     </aop:config>
 
@@ -127,6 +130,4 @@
             <bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy"/>
         </property>
     </bean>
-
-
 </beans>

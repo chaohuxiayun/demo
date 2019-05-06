@@ -2,7 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 						   http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
@@ -10,8 +10,6 @@
                            http://www.springframework.org/schema/context/spring-context-4.0.xsd
                            http://www.springframework.org/schema/mvc 
                            http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
-                           http://www.springframework.org/schema/tx
-    					   http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
     					   http://www.springframework.org/schema/aop            
            					http://www.springframework.org/schema/aop/spring-aop-4.0.xsd ">
     <mvc:annotation-driven/>
@@ -21,7 +19,7 @@
 
     <!-- 注解驱动 -->
 
-    <!-- view resolver.... 视图解析器 -->
+    <!--&lt;!&ndash; view resolver.... 视图解析器 &ndash;&gt;
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
@@ -43,27 +41,27 @@
             <mvc:exclude-mapping path="/**/css"/>
             <mvc:exclude-mapping path="/**/*.map"/>
             <mvc:exclude-mapping path="/**/*.xlsx"/>
-            <bean class="com.xy.interceptor.LoginInterceptor"/>
+            &lt;!&ndash;<bean class="xy.basic.interceptor.LoginInterceptor"/>&ndash;&gt;
         </mvc:interceptor>
-    </mvc:interceptors>
+    </mvc:interceptors>-->
     <bean
             class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/jsp/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
     <!-- 定义文件上传解析器 -->
-    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <!-- 设定默认编码 -->
+    <!--<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        &lt;!&ndash; 设定默认编码 &ndash;&gt;
         <property name="defaultEncoding" value="UTF-8"></property>
-        <!-- 设定文件上传的最大值为5MB，5*1024*1024 -->
+        &lt;!&ndash; 设定文件上传的最大值为5MB，5*1024*1024 &ndash;&gt;
         <property name="maxUploadSize" value="5242880"></property>
-        <!-- 设定文件上传时写入内存的最大值，如果小于这个参数不会生成临时文件，默认为10240 -->
+        &lt;!&ndash; 设定文件上传时写入内存的最大值，如果小于这个参数不会生成临时文件，默认为10240 &ndash;&gt;
         <property name="maxInMemorySize" value="40960"></property>
-        <!-- 上传文件的临时路径 -->
-        <property name="uploadTempDir" value="fileUpload/temp"></property>
-        <!-- 延迟文件解析 -->
+        &lt;!&ndash; 上传文件的临时路径 &ndash;&gt;
+        <property name="uploadTempDir" value="/fileUpload/temp"></property>
+        &lt;!&ndash; 延迟文件解析 &ndash;&gt;
         <property name="resolveLazily" value="true"/>
-    </bean>
+    </bean>-->
 
     <aop:aspectj-autoproxy expose-proxy="true" proxy-target-class="true"/> <!-- aop相关配置  -->
 
