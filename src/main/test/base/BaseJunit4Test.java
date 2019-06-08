@@ -19,7 +19,9 @@ import javax.annotation.Resource;
 @SuppressWarnings("deprecation")
 @RunWith(SpringJUnit4ClassRunner.class)//使用junit4进行测试
 //加载配置文件，可以指定多个配置文件，locations指定的是一个数组
-@ContextConfiguration(locations = {"classpath:applicationContext-redis.xml","classpath:applicationContext-dao.xml",
+@ContextConfiguration(locations = {"classpath:redis/applicationContext-redis.xml",
+        "classpath:applicationContext-dao.xml",
+        "classpath:thread/applicationContext-thread.xml",
         "classpath:spring-mvc.xml"})
 @Transactional
 //配置事务管理器，同时指定自动回滚

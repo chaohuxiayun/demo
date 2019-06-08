@@ -1,51 +1,51 @@
 package xy.basic.base;
 
+import xy.basic.base.hb.BaseEntity;
+import xy.basic.base.hb.Page;
 
 import java.util.List;
 import java.util.Map;
 
 /**
  * @Description
- * @Date 2019/4/23
+ * @Date 2019/6/7
  * @Created by xiayun
  */
-public class BaseServiceImpl<T extends BaseEntity> implements BaseService<T> {
-
-    protected BaseDao<T> baseDao;
+public class BaseServiceImpl<T extends BaseEntity> implements BaseService{
 
 
     @Override
-    public T insert(T t) {
-        return baseDao.insert(t);
+    public BaseEntity insert(BaseEntity BaseEntity) {
+        return null;
     }
 
     @Override
-    public void delete(T t) {
-        baseDao.delete(t);
+    public void delete(BaseEntity BaseEntity) {
+
     }
 
     @Override
-    public void update(T t) {
-        baseDao.update(t);
+    public void update(BaseEntity BaseEntity) {
+
     }
 
     @Override
-    public T select(Long id) {
-        return baseDao.select(id);
+    public BaseEntity select(Long id) {
+        return null;
     }
 
     @Override
-    public List<T> selectList(Map<String, Object> map) {
-        return baseDao.selectList(map);
+    public Page selectWithPage(Map map, Page page) {
+        return null;
     }
 
     @Override
-    public T selectOneObject(Map<String, Object> map) {
-        return baseDao.selectOneObject(map);
+    public BaseEntity selectOneObject(Map map) {
+        return null;
     }
 
     @Override
-    public Page selectWithPage(Map<String, Object> map, Page page) {
-        return baseDao.selectWithPage(map,page);
+    public List selectList(Map map) {
+        return null;
     }
 }

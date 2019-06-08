@@ -28,7 +28,8 @@
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>classpath:applicationContext-dao.xml,
-      classpath:applicationContext-redis.xml
+        classpath:redis/applicationContext-redis.xml,
+        classpath:thread/applicationContext-thread.xml
     </param-value>
   </context-param>
   <listener>

@@ -1,7 +1,7 @@
 package xy.basic.service;
 
-import xy.basic.base.BaseService;
-import xy.basic.entity.MonkEntity;
+import xy.basic.base.hb.BaseService;
+import xy.basic.hb.entity.MonkEntity;
 
 /**
  * @Description
