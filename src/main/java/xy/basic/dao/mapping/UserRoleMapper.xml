@@ -196,4 +196,26 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+
+  <select id="selectByUserId" parameterType="long" resultMap="UserRoleDto">
+    select
+        ur.id as ur_id,
+    <include refid="CommonMapper.userCommon"></include>,
+    <include refid="CommonMapper.roleCommon"></include>
+    from t_userrole ur right join t_role r on ur.role = r.id
+        right join t_user u on ur.user = u.id
+    where u.id = #{userId}
+  </select>
+
+  <resultMap id="UserRoleDto" type="xy.basic.dto.UserRoleDto">
+    <result column="u_id" jdbcType="BIGINT" property="id" />
+    <result column="r_id" jdbcType="BIGINT" property="role.id" />
+    <result column="r_code" jdbcType="BIGINT" property="role.code" />
+    <result column="r_name" jdbcType="BIGINT" property="role.name" />
+    <result column="u_loginName" jdbcType="BIGINT" property="user.loginName" />
+    <result column="u_userName" jdbcType="BIGINT" property="user.userName" />
+    <result column="u_id" jdbcType="BIGINT" property="user.id" />
+  </resultMap>
+
+
 </mapper>

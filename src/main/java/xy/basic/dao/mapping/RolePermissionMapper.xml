@@ -7,10 +7,8 @@
     <result column="delete_time" jdbcType="BIGINT" property="deleteTime" />
     <result column="is_delete" jdbcType="VARCHAR" property="isDelete" />
     <result column="update_time" jdbcType="BIGINT" property="updateTime" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="xy.basic.entity.RolePermissionWithBLOBs">
-    <result column="permission" jdbcType="VARBINARY" property="permission" />
-    <result column="role" jdbcType="VARBINARY" property="role" />
+    <result column="permission" jdbcType="BIGINT" property="permission" />
+    <result column="role" jdbcType="BIGINT" property="role" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -71,27 +69,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, add_time, delete_time, is_delete, update_time
+    id, add_time, delete_time, is_delete, update_time, permission, role
   </sql>
-  <sql id="Blob_Column_List">
-    permission, role
-  </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="xy.basic.entity.RolePermissionExample" resultMap="ResultMapWithBLOBs">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from t_rolepermission
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByExample" parameterType="xy.basic.entity.RolePermissionExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -112,15 +91,15 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="xy.basic.entity.RolePermissionWithBLOBs">
+  <insert id="insert" parameterType="xy.basic.entity.RolePermission">
     insert into t_rolepermission (id, add_time, delete_time, 
       is_delete, update_time, permission, 
       role)
     values (#{id,jdbcType=BIGINT}, #{addTime,jdbcType=BIGINT}, #{deleteTime,jdbcType=BIGINT}, 
-      #{isDelete,jdbcType=VARCHAR}, #{updateTime,jdbcType=BIGINT}, #{permission,jdbcType=VARBINARY}, 
-      #{role,jdbcType=VARBINARY})
+      #{isDelete,jdbcType=VARCHAR}, #{updateTime,jdbcType=BIGINT}, #{permission,jdbcType=BIGINT}, 
+      #{role,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="xy.basic.entity.RolePermissionWithBLOBs">
+  <insert id="insertSelective" parameterType="xy.basic.entity.RolePermission">
     insert into t_rolepermission
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -162,10 +141,10 @@
         #{updateTime,jdbcType=BIGINT},
       </if>
       <if test="permission != null">
-        #{permission,jdbcType=VARBINARY},
+        #{permission,jdbcType=BIGINT},
       </if>
       <if test="role != null">
-        #{role,jdbcType=VARBINARY},
+        #{role,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -194,25 +173,12 @@
         update_time = #{record.updateTime,jdbcType=BIGINT},
       </if>
       <if test="record.permission != null">
-        permission = #{record.permission,jdbcType=VARBINARY},
+        permission = #{record.permission,jdbcType=BIGINT},
       </if>
       <if test="record.role != null">
-        role = #{record.role,jdbcType=VARBINARY},
+        role = #{record.role,jdbcType=BIGINT},
       </if>
     </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map">
-    update t_rolepermission
-    set id = #{record.id,jdbcType=BIGINT},
-      add_time = #{record.addTime,jdbcType=BIGINT},
-      delete_time = #{record.deleteTime,jdbcType=BIGINT},
-      is_delete = #{record.isDelete,jdbcType=VARCHAR},
-      update_time = #{record.updateTime,jdbcType=BIGINT},
-      permission = #{record.permission,jdbcType=VARBINARY},
-      role = #{record.role,jdbcType=VARBINARY}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -223,7 +189,9 @@
       add_time = #{record.addTime,jdbcType=BIGINT},
       delete_time = #{record.deleteTime,jdbcType=BIGINT},
       is_delete = #{record.isDelete,jdbcType=VARCHAR},
-      update_time = #{record.updateTime,jdbcType=BIGINT}
+      update_time = #{record.updateTime,jdbcType=BIGINT},
+      permission = #{record.permission,jdbcType=BIGINT},
+      role = #{record.role,jdbcType=BIGINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

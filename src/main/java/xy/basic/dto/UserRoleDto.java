@@ -7,6 +7,7 @@ package xy.basic.dto;
  */
 public class UserRoleDto {
 
+    private Long id;
     private UserDto user;
     private RoleDto role;
 
@@ -24,5 +25,13 @@ public class UserRoleDto {
 
     public void setRole(RoleDto role) {
         this.role = role;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

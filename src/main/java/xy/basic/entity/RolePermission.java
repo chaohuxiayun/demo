@@ -11,6 +11,10 @@ public class RolePermission {
 
     private Long updateTime;
 
+    private Long permission;
+
+    private Long role;
+
     public Long getId() {
         return id;
     }
@@ -49,5 +53,21 @@ public class RolePermission {
 
     public void setUpdateTime(Long updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Long getPermission() {
+        return permission;
+    }
+
+    public void setPermission(Long permission) {
+        this.permission = permission;
+    }
+
+    public Long getRole() {
+        return role;
+    }
+
+    public void setRole(Long role) {
+        this.role = role;
     }
 }

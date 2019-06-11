@@ -1,9 +1,9 @@
 package xy.basic.hb.entity;
 
 import xy.basic.base.hb.BaseEntity;
+import xy.basic.entity.User;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -17,6 +17,25 @@ public class PermissionEntity extends BaseEntity {
 
     private String code;
     private String name;
+    private String url;
+    /**
+     * 类型（0-主菜单，1-普通菜单）
+     */
+    private String type;
+    /**
+     * 级别 是几级菜单
+     */
+    private Integer level;
+    /**
+     * 图标
+     */
+    private String icon;
+    private UserEntity createUser;
+    /**
+     * 父节点
+     */
+    private PermissionEntity parent;
+    private String parentCode;
 
     private String cont;
 
@@ -34,6 +53,64 @@ public class PermissionEntity extends BaseEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "create_user")
+    public UserEntity getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(UserEntity createUser) {
+        this.createUser = createUser;
+    }
+
+    public PermissionEntity getParent() {
+        return parent;
+    }
+
+    public void setParent(PermissionEntity parent) {
+        this.parent = parent;
+    }
+
+    public String getParentCode() {
+        return parentCode;
+    }
+
+    public void setParentCode(String parentCode) {
+        this.parentCode = parentCode;
     }
 
     public String getCont() {

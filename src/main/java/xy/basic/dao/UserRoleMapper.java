@@ -2,6 +2,7 @@ package xy.basic.dao;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import xy.basic.dto.UserRoleDto;
 import xy.basic.entity.UserRole;
 import xy.basic.entity.UserRoleExample;
 
@@ -19,4 +20,6 @@ public interface UserRoleMapper {
     int updateByExampleSelective(@Param("record") UserRole record, @Param("example") UserRoleExample example);
 
     int updateByExample(@Param("record") UserRole record, @Param("example") UserRoleExample example);
+
+    List<UserRoleDto> selectByUserId(Long userId);
 }
