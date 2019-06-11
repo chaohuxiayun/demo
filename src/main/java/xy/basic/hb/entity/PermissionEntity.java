@@ -31,11 +31,9 @@ public class PermissionEntity extends BaseEntity {
      */
     private String icon;
     private UserEntity createUser;
-    /**
-     * 父节点
-     */
-    private PermissionEntity parent;
+
     private String parentCode;
+    private Long parentId;
 
     private String cont;
 
@@ -97,14 +95,16 @@ public class PermissionEntity extends BaseEntity {
         this.createUser = createUser;
     }
 
-    public PermissionEntity getParent() {
-        return parent;
+    @Column(name = "parent_id")
+    public Long getParentId() {
+        return parentId;
     }
 
-    public void setParent(PermissionEntity parent) {
-        this.parent = parent;
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
     }
 
+    @Column(name = "parent_code")
     public String getParentCode() {
         return parentCode;
     }

@@ -1,6 +1,7 @@
 package xy.basic.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import xy.basic.dao.RoleMapper;
 import xy.basic.entity.Role;
 import xy.basic.entity.RoleExample;
@@ -12,6 +13,7 @@ import xy.basic.util.ListUtils;
  * @Date 2019/6/8
  * @Created by xiayun
  */
+@Service
 public class RoleServiceImpl implements RoleService {
 
     @Autowired

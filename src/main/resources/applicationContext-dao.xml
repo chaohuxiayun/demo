@@ -55,14 +55,72 @@
         <!-- 关闭 abanded 连接时输出错误日志 -->
         <property name = "logAbandoned" value = "${druid.logAbandoned}" />
     </bean>
+
+    <!-- 配置sqlSessionFactory属性 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="mapperLocations" value="classpath:mapper/**/*.xml" />
+        <!-- 配置分页插件 -->
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageHelper">
+                    <!-- 这里的几个配置主要演示如何使用，如果不理解，一定要去掉下面的配置 -->
+                    <property name="properties">
+                        <value>
+                            dialect=mysql
+                            reasonable=true
+                            supportMethodsArguments=true
+                            params=count=countSql
+                            autoRuntimeDialect=true
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property>
+    </bean>
+
+    <!-- shiro配置 -->
+    <!-- 自定义Realm -->
+    <bean id="myRealm" class="xy.basic.shiro.BasicRealm" >
+        <!--配置权限缓存-->
+        <property name="authorizationCachingEnabled" value="false"/>
+    </bean>
+    <!-- 安全管理器 -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="myRealm" />
+    </bean>
+
+    <!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+
+
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <!-- Shiro的核心安全接口,这个属性是必须的 -->
+        <property name="securityManager" ref="securityManager" />
+        <!-- 权限认证失败，则跳转到指定页面 -->
+        <!-- <property name="unauthorizedUrl" value="/user/login?msg=unlogin or
+            unauthorized" /> -->
+        <!-- Shiro连接约束配置,即过滤链的定义 -->
+        <property name="filterChainDefinitions">
+            <value>
+                <!-- 静态文件 -->
+                /style/** = anon
+                /cms/** = authc,roles[admin]
+                /** = anon
+                /user/** = anon
+            </value>
+        </property>
+    </bean>
+
+
     <!-- hibernate sessionFactory -->
-    <bean id="sessionFactory"
+    <!--<bean id="sessionFactory"
           class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
         <property name="dataSource">
             <ref bean="dataSource"/>
         </property>
-        <!--<property name="configLocation" value="classpath:hibernate.cfg.xml">-->
-            <!--</property>-->
+        &lt;!&ndash;<property name="configLocation" value="classpath:hibernate.cfg.xml">&ndash;&gt;
+            &lt;!&ndash;</property>&ndash;&gt;
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.cache.use_second_level_cache">${hibernate.use_second_level_cache}</prop>
@@ -77,17 +135,24 @@
             </props>
 
         </property>
-        <!-- 映射配置文件设置 -->
+        &lt;!&ndash; 映射配置文件设置 &ndash;&gt;
         <property name="packagesToScan">
             <list>
                 <value>xy.basic.hb.entity</value>
             </list>
         </property>
 
+    </bean>-->
+<!--    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sqlSessionFactory"/>
+    </bean>-->
+
+<!--     事务管理 -->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
     </bean>
-    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
+
     <!-- 开启事务控制的注解支持 -->
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
     <tx:advice id="txAdvice" transaction-manager="transactionManager">

@@ -2,9 +2,11 @@ package xy.basic.dao;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 import xy.basic.entity.Role;
 import xy.basic.entity.RoleExample;
 
+@Repository
 public interface RoleMapper {
     long countByExample(RoleExample example);
 

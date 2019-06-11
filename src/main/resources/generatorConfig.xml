@@ -45,7 +45,7 @@
 <!--        <table tableName="T_User" domainObjectName="User" ></table>-->
 <!--        <table tableName="T_Role" domainObjectName="Role" ></table>-->
 <!--        <table tableName="T_UserRole" domainObjectName="UserRole"></table>-->
-       <table tableName="T_RolePermission" domainObjectName="RolePermission"></table>
-        <!--<table tableName="T_Permission" domainObjectName="Permission"></table>-->
+      <!-- <table tableName="T_RolePermission" domainObjectName="RolePermission"></table>-->
+        <table tableName="T_Permission" domainObjectName="Permission"></table>
     </context>
 </generatorConfiguration>

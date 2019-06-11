@@ -65,8 +65,6 @@
 
     <aop:aspectj-autoproxy expose-proxy="true" proxy-target-class="true"/> <!-- aop相关配置  -->
 
-
-
 <!--    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"-->
 <!--          depends-on="lifecycleBeanPostProcessor"/>-->
 <!--    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">-->
